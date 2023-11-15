@@ -1,11 +1,9 @@
 import random
-class Board:
-    def __init__(self, x, y):
-        self.x = x
-        self.y = y
+
+
 
 class User:
-    def __init__(self, x=4, y=8, allow_dup='no'):
+    def __init__(self, x=6, y=4, allow_dup='no'):
         self._x = x
         self._y = y
         self._allow_dup = allow_dup
@@ -45,8 +43,6 @@ class User:
     x = property(get_x, set_x)
     y = property(get_y, set_y)
     allow_dup = property(get_allow_dup,set_allow_dup)
-
-
 
     def set_up(self):
         print(f'Rn your x(colors) is {self.x} and y(positions) is {self.y}.')
@@ -96,9 +92,37 @@ class User:
             else:
                 break
         print('ok let\'s start!')
+        print(f'Playing Mastermind with {self.x} colors and and {self.y} positions')
+        guess = input('What is your guess?: ')
+        Board(self).sol()
+
+    def reset(self):
+        pass
 
 
+class Board(User):
+    def __init__(self, x, y, allow_dup):
+        super().__init__(x, y, allow_dup)
+        self.my_sol = []
 
+    def allow_dup_on(self):
+        pass
+
+    def allow_dup_off(self):
+        pass
+
+    def check(self):
+        pass
+
+    def hint(self):
+        pass
+
+    def sol(self):
+        # dup on
+        for index in range(self.y):
+            color = random.randint(1, self.x)
+            self.my_sol.extend([index,color])
+        print(self.my_sol)
 
 
 
@@ -113,7 +137,4 @@ class User:
 # game setup
 game = User()
 game.play()
-
-
-# print(f'Playing Mastermind with {game.x} and {game.y} positions')
-# guess = int(input('What is your guess?: '))
+h = Board()
