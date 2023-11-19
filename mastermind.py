@@ -9,7 +9,11 @@ class User:
         self.x = x
         self.y = y
         self.allow_dup = allow_dup
-        self.my_sol = []
+        self.__my_sol = []
+
+    # @property
+    # def my_sol(self):
+    #     return self._my_sol
 
     @property
     def x(self):
@@ -63,49 +67,64 @@ class User:
     # def allow_dup_off(self):
     #     pass
 
-    def check(self,guess):
+    def __check(self,guess):
         my_list = []
-        for i in range(len(guess)):
-            temp = []
-            temp.extend([i, int(guess[i])])
-            my_list.append(temp)
+        for i in guess:
+            # temp = []
+            # temp.extend([i, int(guess[i])])
+            my_list.append(i)
         # print('my_list',my_list)
-        if my_list == self.my_sol:
+
+        if my_list == self.__my_sol:
             return True
         # print(my_list)
 
-    def hint(self,guess):
+    def __hint(self,guess):
         # self.check(guess)
         my_list = []
         for i in range(len(guess)):
             temp = []
-            temp.extend([i, int(guess[i])])
-            my_list.append(temp)
-        print('my_lisy',my_list)
-        print('my_sol', self.my_sol)
+            # temp.extend([i, int(guess[i])])
+            my_list.append(str(guess[i]))
+        # print('my_lisy',my_list)
+        # print('my_sol', self.my_sol)
         # print(self.my_sol[0][1])
         #y =index 0 x =index1
-        hint =''
+        hint = ''
         # my_hint = []
-        for i in range(len(self.my_sol)-1):
-            for j in range(len(my_list)-1):
-                if self.my_sol[i] == my_list[j]:
-                    hint += '*'
-                elif self.my_sol[i][1] == my_list[j][1]:
-                    hint += 'o'
 
+        for i in range(len(self.__my_sol)):
+            # print('i',i)
+            # print(my_list[j],self.my_sol[i])
+            # print(i,my_list[i:len(self.my_sol)],self.my_sol)
+            # , self.my_sol[i:len(self.my_sol)]
+            if self.__my_sol[i] == my_list[i]:
+                hint += '*'
+            elif my_list[i:len(self.__my_sol)][0] in self.__my_sol:
+                hint += 'o'
+
+
+        # for i in range(len(self.my_sol)):
+        #     for j in range(len(my_list)):
+        #         # print(i,j)
+        #         # print(my_list[j],self.my_sol[i])
+        #         if self.my_sol[i] == my_list[j] and i == j:
+        #             hint += '*'
+        #         elif self.my_sol[i] in my_list[j]:
+        #             hint += 'o'
 
         print(hint)
 
-    def sol(self):
+    def __sol(self):
         # dup on
         if self.allow_dup == 'yes':
             for index in range(self.y):
                 my_list = []
                 color = random.randint(1, self.x)
-                my_list.extend([index,color])
-                self.my_sol.append(my_list)
-            print(self.my_sol)
+                # my_list.append(color)
+                # my_list.extend([index,color])
+                self.__my_sol.append(str(color))
+            print(self.__my_sol)
         else:
             print('no dup')
             temp = []
@@ -184,29 +203,24 @@ class User:
     #     print('+++++++++++')
     #     print('ok let\'s start!')
         print(f'Playing Mastermind with {self.x} colors and and {self.y} positions')
-        self.sol()
+        self.__sol()
         count = 0
-        count+=1
         # while guess != self.my_sol:
         while True:
             count+=1
             while True:
                 guess = input('What is your guess?: ')
-                if len(guess) == len(self.my_sol):  # STOP ASKING
+                if len(guess) == len(self.__my_sol):  # STOP ASKING
                     break
             print(f'Your guess is {guess}')
-            if self.check(guess): #T LEAVEEEEE
-                print(f'You solved it after {count} rounds')
+            if self.__check(guess): #T LEAVEEEEE
+
                 print('*'*len(guess))
+                print(f'You solved it after {count} rounds')
                 break
 
-            self.hint(guess)
+            self.__hint(guess)
 
-
-
-
-        # if self.check(guess):
-        #     print(f'You solved it after {count} rounds')
 
 # my_game = Mastermind(6, 4)
 # my_game.play()
