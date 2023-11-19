@@ -1,19 +1,11 @@
 import random
-# class Board:
-#     def __init__(self, x, y):
-#         self.x = x
-#         self.y = y
 
 class User:
-    def __init__(self, x=6, y=4, allow_dup='yes'): #allow dup
+    def __init__(self, x=6, y=4, allow_dup='no'): #allow dup
         self.x = x
         self.y = y
         self.allow_dup = allow_dup
         self.__my_sol = []
-
-    # @property
-    # def my_sol(self):
-    #     return self._my_sol
 
     @property
     def x(self):
@@ -53,11 +45,6 @@ class User:
             self._allow_dup = allow_dup
         else:
             raise TypeError
-
-
-    # x = property(get_x, set_x)
-    # y = property(get_y, set_y)
-    # allow_dup = property(get_allow_dup, set_allow_dup)
 
 
 
@@ -126,14 +113,22 @@ class User:
                 self.__my_sol.append(str(color))
             print(self.__my_sol)
         else:
-            print('no dup')
+            # print('no dup')
             temp = []
             for index in range(self.y):
                 # my_list = []  # temp
                 color = random.randint(1, self.x)
                 # my_list.extend([index,color])
-                temp.append(color)
-            # print(temp)
+                while True:
+                    if len(temp) == self.y:
+                        break
+                    if color not in temp:
+                        temp.append(color)
+                    else:
+                        color = random.randint(1, self.x)
+
+
+            print(temp)
         #     for i in range(len(temp)):
         #         # if temp[i] in self.my_sol:
         #         while temp[i] in self.my_sol:
@@ -160,52 +155,13 @@ class User:
         print(f'Rn your x(colors) is {self.x} and y(positions) is {self.y}.')
         print(f'Allow duplicate setting is {self.allow_dup}.')
         print('+++++++++++')
-    #
-    #     pick = input('What do you want to change?(x/y/allow_dup): ')
-    #     if pick not in ['x','y','allow_dup']:
-    #         while True:
-    #             print('Please enter valid choice ')
-    #             pick = input('What do you want to change?(x/y/allow duplicate): ')
-    #             if pick in ['x','y','allow_dup']:
-    #                 break
-    #     elif pick in ['x','y','allow_dup']:
-    #         if pick == 'x':
-    #             print('setting x')
-    #             x = int(input('x = '))
-    #             self.set_x(x)
-    #             print('RN x status: ', self.x)
-    #         elif pick == 'y':
-    #             print('setting y')
-    #             y = int(input('y = '))
-    #             self.set_y(y)
-    #             print('RN y status: ', self.y)
-    #         elif pick == 'allow_dup':
-    #             print('setting allow_dup')
-    #             allow_dup = input('allow_dup = ')
-    #             self.set_allow_dup(allow_dup)
-    #             print('RN allow_dup status: ', self.allow_dup)
-    #         #might have to fix setter later with value type
 
 
     def play(self):
         print('--Welcome to Play Mastermind--')
-    #     rules = int(input('DO YOU KNOW HOW TO PLAY?????:0, Yes(1)/No(2) '))
-    #     if rules == 2:
-    #         print("""Simple, all you have to do is...
-    #             """)
-    #     pick = int(input('Do you want to set up your board?, Yes(1)/No(2) '))
-    #     if pick == 1:
-    #         self.set_up()
-    #         check = int(input('Are you satisfied with your setup?, Yes(1)/No(2) '))
-    #         while check != 1:
-    #             self.set_up()
-    #             check = int(input('Are you satisfied with your setup?, Yes(1)/No(2) '))
-    #     print('+++++++++++')
-    #     print('ok let\'s start!')
         print(f'Playing Mastermind with {self.x} colors and and {self.y} positions')
         self.__sol()
         count = 0
-        # while guess != self.my_sol:
         while True:
             count+=1
             while True:
@@ -229,7 +185,6 @@ class User:
 
 
 
-        # generate sol
 
 
 
